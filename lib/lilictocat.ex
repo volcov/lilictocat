@@ -1,18 +1,7 @@
 defmodule Lilictocat do
-  @moduledoc """
-  Documentation for Lilictocat.
-  """
+  alias Lilictocat.Github
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Lilictocat.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def name do
+    Github.name()
   end
 end
