@@ -1,7 +1,7 @@
 defmodule Lilictocat do
   alias Lilictocat.Github
 
-  def name do
+  def whoami do
     Github.name()
   end
 end
