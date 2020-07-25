@@ -1,4 +1,5 @@
 defmodule Lilictocat.Github.API do
+  @callback get_profile() :: map()
   def get_profile do
     {200, map, _} = Tentacat.Users.me(client())
     map
