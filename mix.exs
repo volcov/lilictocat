@@ -24,7 +24,8 @@ defmodule Lilictocat.MixProject do
   defp deps do
     [
       {:tentacat, "~> 2.0"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 end
