@@ -1,8 +1,8 @@
 defmodule Lilictocat.Github do
-  alias Lilictocat.Github.API, as: GithubAPI
+  @github_api Application.get_env(:lilictocat, :github_api)
 
   def name do
-    %{"name" => name} = GithubAPI.get_profile()
+    %{"name" => name} = @github_api.get_profile()
     name
   end
 end
