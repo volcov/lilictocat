@@ -14,4 +14,10 @@ defmodule Lilictocat.GithubTest do
       assert Github.name() == "Liliana Vess"
     end
   end
+
+  describe "organizations/0" do
+    test "returns a single organization" do
+      assert Github.organizations() == "dominaria inc"
+    end
+  end
 end
