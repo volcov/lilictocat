@@ -1,6 +1,10 @@
 defmodule Lilictocat.Github do
   @github_api Application.get_env(:lilictocat, :github_api)
 
+  @moduledoc """
+  this module consumes the github API, and makes the necessary transformations to use the data
+  """
+
   def name() do
     %{name: name} = @github_api.get_profile()
     name

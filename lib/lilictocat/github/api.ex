@@ -1,6 +1,8 @@
 defmodule Lilictocat.Github.API do
   @behaviour Lilictocat.GithubBehaviour
 
+  @moduledoc false
+
   def get_profile do
     {200, map, _} = Tentacat.Users.me(client())
     map
