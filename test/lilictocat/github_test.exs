@@ -87,25 +87,25 @@ defmodule Lilictocat.GithubTest do
 
       assert Github.open_pull_requests_of_organization() == [
                %{
-                 created_at: "2020-07-23T17:41:20Z",
+                 created_at: ~U[2020-07-23 17:41:20Z],
                  link: "https://link_pr.com/1",
                  number: 1,
                  project: "dominaria_inc/zoombie"
                },
                %{
-                 created_at: "2020-08-23T17:41:20Z",
+                 created_at: ~U[2020-08-23 17:41:20Z],
                  link: "https://link_pr.com/2",
                  number: 2,
                  project: "dominaria_inc/goblin"
                },
                %{
-                 created_at: "2020-09-23T17:41:20Z",
+                 created_at: ~U[2020-09-23 17:41:20Z],
                  link: "https://link_pr.com/3",
                  number: 3,
                  project: "dominaria_inc/zoombie"
                },
                %{
-                 created_at: "2020-10-23T17:41:20Z",
+                 created_at: ~U[2020-10-23 17:41:20Z],
                  link: "https://link_pr.com/4",
                  number: 4,
                  project: "dominaria_inc/goblin"
