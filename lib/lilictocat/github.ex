@@ -31,8 +31,13 @@ defmodule Lilictocat.Github do
         project: &1.base.repo.full_name,
         number: &1.number,
         link: &1.url,
-        created_at: &1.created_at
+        created_at: parse_date(&1.created_at)
       }
     )
+  end
+
+  defp parse_date(string) do
+    {:ok, datetime, 0} = DateTime.from_iso8601(string)
+    datetime
   end
 end
