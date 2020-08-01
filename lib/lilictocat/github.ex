@@ -26,6 +26,18 @@ defmodule Lilictocat.Github do
     |> Enum.map(fn repo -> @github_api.get_open_pulls(repo.owner, repo.name) end)
     |> Enum.filter(&(!Enum.empty?(&1)))
     |> List.flatten()
-    |> Enum.map(& &1.url)
+    |> Enum.map(
+      &%{
+        project: &1.base.repo.full_name,
+        number: &1.number,
+        link: &1.url,
+        created_at: parse_date(&1.created_at)
+      }
+    )
+  end
+
+  defp parse_date(string) do
+    {:ok, datetime, 0} = DateTime.from_iso8601(string)
+    datetime
   end
 end
