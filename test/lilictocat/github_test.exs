@@ -105,7 +105,7 @@ defmodule Lilictocat.GithubTest do
                  project: "dominaria_inc/zoombie"
                },
                %{
-                 created_at: ~U[2020-10-23 17:41:20Z],
+                 created_at: ~U[2020-11-23 17:41:20Z],
                  link: "https://link_pr.com/4",
                  number: 4,
                  project: "dominaria_inc/goblin"
