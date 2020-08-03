@@ -113,4 +113,24 @@ defmodule Lilictocat.GithubTest do
              ]
     end
   end
+
+  describe "pull_request_without_review/1" do
+    test "pull request with review" do
+      expect(Lilictocat.Github.APIMock, :get_reviews_of_pr, fn _project, _number ->
+        [%{review_id: 1}, %{review_id: 2}]
+      end)
+
+      pull_request = %{project: "dominaria_inc/goblin", number: 21}
+      refute Github.pull_request_without_review?(pull_request)
+    end
+
+    test "pull request without review" do
+      expect(Lilictocat.Github.APIMock, :get_reviews_of_pr, fn _project, _number ->
+        []
+      end)
+
+      pull_request = %{project: "dominaria_inc/zoombie", number: 666}
+      assert Github.pull_request_without_review?(pull_request)
+    end
+  end
 end
