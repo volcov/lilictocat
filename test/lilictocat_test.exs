@@ -28,13 +28,13 @@ defmodule LilictocatTest do
       [
         %{
           created_at: "2020-07-23T17:41:20Z",
-          url: "https://github.com/dominaria/1",
+          html_url: "https://github.com/dominaria/1",
           number: 1,
           base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
         },
         %{
           created_at: "2020-08-23T17:41:20Z",
-          url: "https://github.com/dominaria/2",
+          html_url: "https://github.com/dominaria/2",
           number: 2,
           base: %{repo: %{full_name: "dominaria_inc/goblin"}}
         }

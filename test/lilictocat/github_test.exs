@@ -55,13 +55,13 @@ defmodule Lilictocat.GithubTest do
         [
           %{
             created_at: "2020-07-23T17:41:20Z",
-            url: "https://link_pr.com/1",
+            html_url: "https://link_pr.com/1",
             number: 1,
             base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
           },
           %{
             created_at: "2020-08-23T17:41:20Z",
-            url: "https://link_pr.com/2",
+            html_url: "https://link_pr.com/2",
             number: 2,
             base: %{repo: %{full_name: "dominaria_inc/goblin"}}
           }
@@ -72,13 +72,13 @@ defmodule Lilictocat.GithubTest do
         [
           %{
             created_at: "2020-09-23T17:41:20Z",
-            url: "https://link_pr.com/3",
+            html_url: "https://link_pr.com/3",
             number: 3,
             base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
           },
           %{
             created_at: "2020-11-23T17:41:20Z",
-            url: "https://link_pr.com/4",
+            html_url: "https://link_pr.com/4",
             number: 4,
             base: %{repo: %{full_name: "dominaria_inc/goblin"}}
           }
