@@ -55,13 +55,13 @@ defmodule Lilictocat.GithubTest do
         [
           %{
             created_at: "2020-07-23T17:41:20Z",
-            url: "https://link_pr.com/1",
+            html_url: "https://link_pr.com/1",
             number: 1,
             base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
           },
           %{
             created_at: "2020-08-23T17:41:20Z",
-            url: "https://link_pr.com/2",
+            html_url: "https://link_pr.com/2",
             number: 2,
             base: %{repo: %{full_name: "dominaria_inc/goblin"}}
           }
@@ -72,13 +72,13 @@ defmodule Lilictocat.GithubTest do
         [
           %{
             created_at: "2020-09-23T17:41:20Z",
-            url: "https://link_pr.com/3",
+            html_url: "https://link_pr.com/3",
             number: 3,
             base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
           },
           %{
             created_at: "2020-11-23T17:41:20Z",
-            url: "https://link_pr.com/4",
+            html_url: "https://link_pr.com/4",
             number: 4,
             base: %{repo: %{full_name: "dominaria_inc/goblin"}}
           }
@@ -111,6 +111,26 @@ defmodule Lilictocat.GithubTest do
                  project: "dominaria_inc/goblin"
                }
              ]
+    end
+  end
+
+  describe "pull_request_without_review/1" do
+    test "pull request with review" do
+      expect(Lilictocat.Github.APIMock, :get_reviews_of_pr, fn _project, _number ->
+        [%{review_id: 1}, %{review_id: 2}]
+      end)
+
+      pull_request = %{project: "dominaria_inc/goblin", number: 21}
+      refute Github.pull_request_without_review?(pull_request)
+    end
+
+    test "pull request without review" do
+      expect(Lilictocat.Github.APIMock, :get_reviews_of_pr, fn _project, _number ->
+        []
+      end)
+
+      pull_request = %{project: "dominaria_inc/zoombie", number: 666}
+      assert Github.pull_request_without_review?(pull_request)
     end
   end
 end

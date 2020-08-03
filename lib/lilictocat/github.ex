@@ -30,10 +30,14 @@ defmodule Lilictocat.Github do
       &%{
         project: &1.base.repo.full_name,
         number: &1.number,
-        link: &1.url,
+        link: &1.html_url,
         created_at: parse_date(&1.created_at)
       }
     )
+  end
+
+  def pull_request_without_review?(%{project: project, number: number}) do
+    Enum.empty?(@github_api.get_reviews_of_pr(project, number))
   end
 
   defp parse_date(string) do

@@ -25,6 +25,13 @@ defmodule Lilictocat.Github.API do
     pulls
   end
 
+  def get_reviews_of_pr(project, pr_number) do
+    [organization, repo] = String.split(project, "/")
+
+    {200, reviews, _} = Tentacat.Pulls.Reviews.list(client(), organization, repo, pr_number)
+    reviews
+  end
+
   defp client do
     {:ok, configs} = Application.fetch_env(:lilictocat, Lilictocat.Github)
     Tentacat.Client.new(%{access_token: Keyword.get(configs, :github_access_token)})
