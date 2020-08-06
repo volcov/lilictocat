@@ -18,22 +18,24 @@ defmodule Lilictocat.Github do
     organizations()
     |> List.first()
     |> @github_api.get_organization_repos()
-    |> Enum.map(fn repo -> %{owner: repo.owner.login, name: repo.name} end)
+    |> Task.async_stream(fn repo -> %{owner: repo.owner.login, name: repo.name} end)
   end
 
   def open_pull_requests_of_organization() do
     organization_repos()
-    |> Enum.map(fn repo -> @github_api.get_open_pulls(repo.owner, repo.name) end)
-    |> Enum.filter(&(!Enum.empty?(&1)))
-    |> List.flatten()
-    |> Enum.map(
-      &%{
-        project: &1.base.repo.full_name,
-        number: &1.number,
-        link: &1.html_url,
-        created_at: parse_date(&1.created_at)
-      }
-    )
+    |> Task.async_stream(fn {:ok, repo} -> @github_api.get_open_pulls(repo.owner, repo.name) end)
+    |> Stream.filter(fn {:ok, pr} -> !Enum.empty?(pr) end)
+    |> Stream.flat_map(fn {:ok, pr_list} ->
+      Stream.map(
+        pr_list,
+        &%{
+          project: &1.base.repo.full_name,
+          number: &1.number,
+          link: &1.html_url,
+          created_at: parse_date(&1.created_at)
+        }
+      )
+    end)
   end
 
   def pull_request_without_review?(%{project: project, number: number}) do
