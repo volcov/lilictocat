@@ -3,11 +3,6 @@ defmodule Lilictocat.Github.API do
 
   @moduledoc false
 
-  def get_profile do
-    {200, map, _} = Tentacat.Users.me(client())
-    map
-  end
-
   def get_organizations do
     {200, orgs, _} = Tentacat.Organizations.list_mine(client())
     orgs
