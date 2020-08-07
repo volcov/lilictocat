@@ -33,9 +33,9 @@ defmodule Lilictocat.GithubTest do
         ]
       end)
 
-      assert Github.organization_repos() == [
-               %{owner: "dominaria inc", name: "zoombie"},
-               %{owner: "dominaria inc", name: "goblin"}
+      assert Enum.to_list(Github.organization_repos()) == [
+               ok: %{owner: "dominaria inc", name: "zoombie"},
+               ok: %{owner: "dominaria inc", name: "goblin"}
              ]
     end
   end
@@ -85,7 +85,7 @@ defmodule Lilictocat.GithubTest do
         ]
       end)
 
-      assert Github.open_pull_requests_of_organization() == [
+      assert Enum.to_list(Github.open_pull_requests_of_organization()) == [
                %{
                  created_at: ~U[2020-07-23 17:41:20Z],
                  link: "https://link_pr.com/1",
