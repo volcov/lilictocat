@@ -25,21 +25,21 @@ defmodule Lilictocat.Github do
     organization_repos()
     |> Task.async_stream(fn {:ok, repo} -> @github_api.get_open_pulls(repo.owner, repo.name) end)
     |> Stream.filter(fn {:ok, pr} -> !Enum.empty?(pr) end)
-    |> Stream.flat_map(fn {:ok, pr_list} ->
-      Stream.map(
-        pr_list,
-        &%{
-          project: &1.base.repo.full_name,
-          number: &1.number,
-          link: &1.html_url,
-          created_at: parse_date(&1.created_at)
-        }
-      )
-    end)
+    |> Stream.flat_map(fn {:ok, pr_list} -> pr_list end)
+    |> Stream.map(&convert_pr/1)
   end
 
   def pull_request_without_review?(%{project: project, number: number}) do
     Enum.empty?(@github_api.get_reviews_of_pr(project, number))
+  end
+
+  defp convert_pr(pr) do
+    %{
+      project: pr.base.repo.full_name,
+      number: pr.number,
+      link: pr.html_url,
+      created_at: parse_date(pr.created_at)
+    }
   end
 
   defp parse_date(string) do
