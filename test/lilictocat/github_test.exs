@@ -7,14 +7,6 @@ defmodule Lilictocat.GithubTest do
 
   setup :verify_on_exit!
 
-  describe "name/0" do
-    test "returns a name" do
-      expect(Lilictocat.Github.APIMock, :get_profile, fn -> %{name: "Liliana Vess"} end)
-
-      assert Github.name() == "Liliana Vess"
-    end
-  end
-
   describe "organizations/0" do
     test "returns a list of organizations" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)

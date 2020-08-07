@@ -5,11 +5,6 @@ defmodule Lilictocat.Github do
   this module consumes the github API, and makes the necessary transformations to use the data
   """
 
-  def name() do
-    %{name: name} = @github_api.get_profile()
-    name
-  end
-
   def organizations() do
     Enum.map(@github_api.get_organizations(), fn org -> org.login end)
   end
