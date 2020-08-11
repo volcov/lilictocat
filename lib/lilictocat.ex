@@ -11,6 +11,10 @@ defmodule Lilictocat do
 
   @doc """
   returns the link to the oldest pull request that has no views
+
+  ## Examples
+     iex> Lilictocat.get_oldest_pull_request_without_review()
+     "https://github.com/dominaria/zoombie/pull/666"
   """
 
   @spec get_oldest_pull_request_without_review() :: String.t()
