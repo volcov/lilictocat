@@ -8,7 +8,8 @@ defmodule Lilictocat.Github do
   @doc """
   returns a list of organiztions
 
-  ## Examples
+  ## Example
+
      iex> Lilictocat.Github.organizations()
      ["dominaria inc"]
   """
@@ -20,7 +21,8 @@ defmodule Lilictocat.Github do
   @doc """
   returns a list of repositories
 
-  ## Examples
+  ## Example
+
      iex> Lilictocat.Github.organization_repos()
      [
        %{owner: %{login: "dominaria inc"}, name: "zoombie"},
@@ -38,7 +40,8 @@ defmodule Lilictocat.Github do
   @doc """
   returns a list of pull requests with status open
 
-  ## Examples
+  ## Example
+
      iex> Lilictocat.Github.open_pull_requests_of_organization()
      [
        %{
@@ -67,7 +70,8 @@ defmodule Lilictocat.Github do
   @doc """
   returns a boolean to indicate if the pull request has any review
 
-  ## Examples
+  ## Example
+
      iex> Lilictocat.Github.pull_request_without_review(%{project: "dominaria_inc/goblin", number: 21})
      true
   """
