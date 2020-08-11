@@ -9,6 +9,10 @@ defmodule Lilictocat do
     in this alpha version we are only working with one rule, in the future we will have a way to customize your own rules
   """
 
+  @doc """
+  returns the link to the oldest pull request that has no views
+  """
+
   @spec get_oldest_pull_request_without_review() :: String.t()
   def get_oldest_pull_request_without_review do
     Github.open_pull_requests_of_organization()
