@@ -19,8 +19,8 @@
 
  you will need to generate a [Github personal API token](https://github.com/blog/1509-personal-api-tokens) with this options
 
--  repo
--  read:org
+-   repo
+-   read:org
 
 After that export with key name `LILICTOCAT_TOKEN`, like:
 ```shell
