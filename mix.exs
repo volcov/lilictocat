@@ -16,7 +16,8 @@ defmodule Lilictocat.MixProject do
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test],
-      source_url: "https://github.com/volcov/lilictocat"
+      source_url: "https://github.com/volcov/lilictocat",
+      docs: [extras: ["README.md"], main: "Lilictocat", assets: "assets"]
     ]
   end
 
