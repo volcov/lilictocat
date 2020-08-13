@@ -29,7 +29,7 @@ defmodule Lilictocat.Github do
        %{owner: %{login: "dominaria inc"}, name: "goblin"}
      ]
   """
-  @spec organization_repos() :: list()
+  @spec organization_repos() :: Enumerable.t()
   def organization_repos() do
     organizations()
     |> List.first()
@@ -58,7 +58,7 @@ defmodule Lilictocat.Github do
        }
      ]
   """
-  @spec open_pull_requests_of_organization() :: list()
+  @spec open_pull_requests_of_organization() :: Enumerable.t()
   def open_pull_requests_of_organization() do
     organization_repos()
     |> Task.async_stream(fn {:ok, repo} -> @github_api.get_open_pulls(repo.owner, repo.name) end)
