@@ -1,15 +1,22 @@
 defmodule Lilictocat.MixProject do
   use Mix.Project
 
+  @description "Lilictocat is a simple pull request filter."
+  @version "0.1.0"
+
   def project do
     [
       app: :lilictocat,
-      version: "0.1.0",
+      name: "Lilictocat",
+      version: @version,
+      description: @description,
+      package: package(),
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test]
+      preferred_cli_env: [coveralls: :test],
+      source_url: "https://github.com/volcov/lilictocat"
     ]
   end
 
@@ -27,6 +34,16 @@ defmodule Lilictocat.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:mox, "~> 0.5", only: :test},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+    ]
+  end
+
+  defp package() do
+    [
+      maintainers: ["Bruno Volcov"],
+      files: ~w(lib .formatter.exs mix.exs README.md),
+      links: %{
+        "GitHub" => "https://github.com/volcov/lilictocat"
+      }
     ]
   end
 end
