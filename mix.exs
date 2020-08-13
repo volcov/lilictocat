@@ -40,7 +40,8 @@ defmodule Lilictocat.MixProject do
   defp package() do
     [
       maintainers: ["Bruno Volcov"],
-      files: ~w(lib .formatter.exs mix.exs README.md),
+      licenses: ["MIT"],
+      files: ~w(lib .formatter.exs mix.exs README.md LICENSE),
       links: %{
         "GitHub" => "https://github.com/volcov/lilictocat"
       }
