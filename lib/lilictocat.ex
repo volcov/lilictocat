@@ -22,7 +22,7 @@ defmodule Lilictocat do
   def get_oldest_pull_request_without_review do
     Github.open_pull_requests_of_organization()
     |> Stream.filter(fn pr -> Github.pull_request_without_review?(pr) end)
-    |> Enum.min_by(& &1.created_at, DateTime)
+    |> Enum.min_by(& &1.created_at, DateTime, fn -> %{link: "no pr's to list"} end)
     |> Map.get(:link)
   end
 end
