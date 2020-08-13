@@ -34,7 +34,8 @@ defmodule Lilictocat.MixProject do
       {:tentacat, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:mox, "~> 0.5", only: :test},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
