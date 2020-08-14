@@ -6,12 +6,13 @@ defmodule Lilictocat.Github do
   """
 
   @doc """
-  returns a list of organiztions
+    returns a list of organiztions.
 
-  ## Example
+  ## Examples
 
-     iex> Lilictocat.Github.organizations()
-     ["dominaria inc"]
+      iex> Lilictocat.Github.organizations()
+      ["dominaria inc"]
+
   """
   @spec organizations() :: list()
   def organizations() do
@@ -19,15 +20,16 @@ defmodule Lilictocat.Github do
   end
 
   @doc """
-  returns a list of repositories
+    returns a list of repositories.
 
-  ## Example
+  ## Examples
 
-     iex> Lilictocat.Github.organization_repos()
-     [
-       %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-       %{owner: %{login: "dominaria inc"}, name: "goblin"}
-     ]
+      iex> Lilictocat.Github.organization_repos()
+      [
+      %{owner: %{login: "dominaria inc"}, name: "zoombie"},
+      %{owner: %{login: "dominaria inc"}, name: "goblin"}
+      ]
+
   """
   @spec organization_repos() :: Enumerable.t()
   def organization_repos() do
@@ -38,25 +40,26 @@ defmodule Lilictocat.Github do
   end
 
   @doc """
-  returns a list of pull requests with status open
+    returns a list of pull requests with status open.
 
-  ## Example
+  ## Examples
 
-     iex> Lilictocat.Github.open_pull_requests_of_organization()
-     [
-       %{
-         created_at: "2020-07-23T17:41:20Z",
-         html_url: "https://link_pr.com/1",
-         number: 1,
-         base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
-       },
-       %{
-         created_at: "2020-08-23T17:41:20Z",
-         html_url: "https://link_pr.com/2",
-         number: 2,
-         base: %{repo: %{full_name: "dominaria_inc/goblin"}}
-       }
-     ]
+      iex> Lilictocat.Github.open_pull_requests_of_organization()
+      [
+        %{
+          created_at: "2020-07-23T17:41:20Z",
+          html_url: "https://link_pr.com/1",
+          number: 1,
+          base: %{repo: %{full_name: "dominaria_inc/zoombie"}}
+          },
+          %{
+          created_at: "2020-08-23T17:41:20Z",
+          html_url: "https://link_pr.com/2",
+          number: 2,
+          base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+        }
+      ]
+
   """
   @spec open_pull_requests_of_organization() :: Enumerable.t()
   def open_pull_requests_of_organization() do
@@ -68,12 +71,13 @@ defmodule Lilictocat.Github do
   end
 
   @doc """
-  returns a boolean to indicate if the pull request has any review
+    returns a boolean to indicate if the pull request has any review.
 
-  ## Example
+  ## Examples
 
-     iex> Lilictocat.Github.pull_request_without_review(%{project: "dominaria_inc/goblin", number: 21})
-     true
+      iex> Lilictocat.Github.pull_request_without_review(%{project: "dominaria_inc/goblin", number: 21})
+      true
+
   """
   @spec pull_request_without_review?(map()) :: boolean()
   def pull_request_without_review?(%{project: project, number: number}) do

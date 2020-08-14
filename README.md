@@ -17,6 +17,18 @@
 
  ## instalation
 
+ Add Lilictocat to your `mix.exs`:
+
+ ```elixir
+ defp deps do
+   [
+     {:lilictocat, "~> 0.1.0"}
+   ]
+ end
+ ```
+
+After that, run `mix deps.get`.
+
  you will need to generate a [Github personal API token](https://github.com/blog/1509-personal-api-tokens) with this options
 
 -   repo
