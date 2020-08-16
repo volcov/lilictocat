@@ -34,7 +34,14 @@ After that, run `mix deps.get`.
 -   repo
 -   read:org
 
-After that export with key name `LILICTOCAT_TOKEN`, like:
+After that, add to your `config.exs`
+
+```elixir
+config :lilictocat, github_access_token: "your_token"
+config :tentacat, :deserialization_options, keys: :atoms
+```
+
+NOTE: if running locally, you can export via environment variable 
 ```shell
 export LILICTOCAT_TOKEN="xxxxxxxxxxxxxxxxxxxxx"
 ```
