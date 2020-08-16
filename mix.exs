@@ -2,7 +2,7 @@ defmodule Lilictocat.MixProject do
   use Mix.Project
 
   @description "Lilictocat is a simple pull request filter."
-  @version "0.1.1"
+  @version "0.1.2"
 
   def project do
     [
@@ -11,7 +11,7 @@ defmodule Lilictocat.MixProject do
       version: @version,
       description: @description,
       package: package(),
-      elixir: "~> 1.9",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],

@@ -28,7 +28,12 @@ defmodule Lilictocat.Github.API do
   end
 
   defp client do
-    {:ok, configs} = Application.fetch_env(:lilictocat, Lilictocat.Github)
-    Tentacat.Client.new(%{access_token: Keyword.get(configs, :github_access_token)})
+    {:ok, key} =
+      case System.get_env("LILICTOCAT_TOKEN") do
+        nil -> Application.fetch_env(:lilictocat, :github_access_token)
+        value -> {:ok, value}
+      end
+
+    Tentacat.Client.new(%{access_token: key})
   end
 end
