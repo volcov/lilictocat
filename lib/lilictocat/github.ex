@@ -1,5 +1,5 @@
 defmodule Lilictocat.Github do
-  @github_api Application.get_env(:lilictocat, :github_api)
+  @github_api Application.get_env(:lilictocat, :github_api, Lilictocat.Github.API)
 
   @moduledoc """
   this module consumes the github API, and makes the necessary transformations to use the data
