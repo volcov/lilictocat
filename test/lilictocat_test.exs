@@ -11,8 +11,8 @@ defmodule LilictocatTest do
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
@@ -65,7 +65,7 @@ defmodule LilictocatTest do
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true}
         ]
       end)
 

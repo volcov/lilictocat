@@ -26,8 +26,8 @@ defmodule Lilictocat.Github do
 
       iex> Lilictocat.Github.organization_repos()
       [
-      %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-      %{owner: %{login: "dominaria inc"}, name: "goblin"}
+      %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+      %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
       ]
 
   """
@@ -36,7 +36,34 @@ defmodule Lilictocat.Github do
     organizations()
     |> List.first()
     |> @github_api.get_organization_repos()
-    |> Task.async_stream(fn repo -> %{owner: repo.owner.login, name: repo.name} end)
+    |> Task.async_stream(fn repo ->
+      %{owner: repo.owner.login, name: repo.name, archived: repo.archived}
+    end)
+  end
+
+  @doc """
+    returns a list of repositories with options.
+
+  ## Examples
+
+      iex> Lilictocat.Github.organization_repos(ignore_archived: true)
+      [
+      %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+      ]
+
+  """
+  @spec organization_repos(list()) :: Enumerable.t()
+  def organization_repos(options) do
+    case options do
+      [ignore_archived: true] ->
+        Stream.filter(organization_repos(), fn {:ok, repo} -> !repo.archived end)
+
+      [ignore_archived: false] ->
+        organization_repos()
+
+      _ ->
+        []
+    end
   end
 
   @doc """

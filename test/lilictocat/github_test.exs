@@ -20,14 +20,47 @@ defmodule Lilictocat.GithubTest do
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
       assert Enum.to_list(Github.organization_repos()) == [
-               ok: %{owner: "dominaria inc", name: "zoombie"},
-               ok: %{owner: "dominaria inc", name: "goblin"}
+               ok: %{owner: "dominaria inc", name: "zoombie", archived: true},
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
+             ]
+    end
+  end
+
+  describe "organization_repos/1" do
+    test "with ignore_archived true" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      assert Enum.to_list(Github.organization_repos(ignore_archived: true)) == [
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
+             ]
+    end
+
+    test "with ignore_archived false" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      assert Enum.to_list(Github.organization_repos(ignore_archived: false)) == [
+               ok: %{owner: "dominaria inc", name: "zoombie", archived: true},
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
              ]
     end
   end
@@ -38,8 +71,8 @@ defmodule Lilictocat.GithubTest do
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
