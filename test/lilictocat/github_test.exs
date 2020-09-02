@@ -63,6 +63,10 @@ defmodule Lilictocat.GithubTest do
                ok: %{owner: "dominaria inc", name: "goblin", archived: false}
              ]
     end
+
+    test "with wrong options" do
+      assert Enum.to_list(Github.organization_repos(i_think_this_is_a_param: true)) == []
+    end
   end
 
   describe "open_pull_requests_of_organization/0" do
