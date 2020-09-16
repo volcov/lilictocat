@@ -61,6 +61,9 @@ defmodule Lilictocat.Github do
       [ignore_archived: false] ->
         organization_repos()
 
+      [] ->
+        organization_repos()
+
       _ ->
         []
     end
@@ -87,10 +90,20 @@ defmodule Lilictocat.Github do
         }
       ]
 
+      iex> Lilictocat.Github.open_pull_requests_of_organization(ignore_archived: true)
+      [
+        %{
+          created_at: "2020-08-23T17:41:20Z",
+          html_url: "https://link_pr.com/2",
+          number: 2,
+          base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+        }
+      ]
+
   """
-  @spec open_pull_requests_of_organization() :: Enumerable.t()
-  def open_pull_requests_of_organization() do
-    organization_repos()
+  @spec open_pull_requests_of_organization(list()) :: Enumerable.t()
+  def open_pull_requests_of_organization(arguments \\ []) do
+    organization_repos(arguments)
     |> Task.async_stream(fn {:ok, repo} -> @github_api.get_open_pulls(repo.owner, repo.name) end)
     |> Stream.filter(fn {:ok, pr} -> !Enum.empty?(pr) end)
     |> Stream.flat_map(fn {:ok, pr_list} -> pr_list end)

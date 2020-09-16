@@ -69,7 +69,7 @@ defmodule Lilictocat.GithubTest do
     end
   end
 
-  describe "open_pull_requests_of_organization/0" do
+  describe "open_pull_requests_of_organization/1" do
     test "return a list of pr's" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
 
@@ -132,6 +132,48 @@ defmodule Lilictocat.GithubTest do
                  link: "https://link_pr.com/3",
                  number: 3,
                  project: "dominaria_inc/zoombie"
+               },
+               %{
+                 created_at: ~U[2020-11-23 17:41:20Z],
+                 link: "https://link_pr.com/4",
+                 number: 4,
+                 project: "dominaria_inc/goblin"
+               }
+             ]
+    end
+
+    test "return a list of pr's ignoring archived repos" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      expect(Lilictocat.Github.APIMock, :get_open_pulls, fn _owner, _name ->
+        [
+          %{
+            created_at: "2020-08-23T17:41:20Z",
+            html_url: "https://link_pr.com/2",
+            number: 2,
+            base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+          },
+          %{
+            created_at: "2020-11-23T17:41:20Z",
+            html_url: "https://link_pr.com/4",
+            number: 4,
+            base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+          }
+        ]
+      end)
+
+      assert Enum.to_list(Github.open_pull_requests_of_organization(ignore_archived: true)) == [
+               %{
+                 created_at: ~U[2020-08-23 17:41:20Z],
+                 link: "https://link_pr.com/2",
+                 number: 2,
+                 project: "dominaria_inc/goblin"
                },
                %{
                  created_at: ~U[2020-11-23 17:41:20Z],
