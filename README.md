@@ -15,6 +15,15 @@
     # => "no pr's to list"
  ```
 
+ #### options
+
+ It is possible to ignore archived repositories with `ignore_archived`
+
+ ```elixir
+    Lilictocat.get_oldest_pull_request_without_review(ignore_archived: true)
+    # => "https://github.com/dominaria/goblin/pull/132"
+ ```  
+
  ## instalation
 
  Add Lilictocat to your `mix.exs`:
@@ -41,7 +50,7 @@ config :lilictocat, github_access_token: "your_token"
 config :tentacat, :deserialization_options, keys: :atoms
 ```
 
-NOTE: if running locally, you can export via environment variable 
+NOTE: if running locally, you can export via environment variable
 ```shell
 export LILICTOCAT_TOKEN="xxxxxxxxxxxxxxxxxxxxx"
 ```
