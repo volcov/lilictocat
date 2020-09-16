@@ -17,7 +17,7 @@ defmodule Lilictocat do
       iex> Lilictocat.get_oldest_pull_request_without_review()
       "https://github.com/dominaria/zoombie/pull/666"
 
-      iex> Lilictocat.get_oldest_pull_request_without_review()
+      iex> Lilictocat.get_oldest_pull_request_without_review(ignore_archived: true)
       "https://github.com/dominaria/goblin/pull/132"
 
   """
