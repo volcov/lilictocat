@@ -20,26 +20,63 @@ defmodule Lilictocat.GithubTest do
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
       assert Enum.to_list(Github.organization_repos()) == [
-               ok: %{owner: "dominaria inc", name: "zoombie"},
-               ok: %{owner: "dominaria inc", name: "goblin"}
+               ok: %{owner: "dominaria inc", name: "zoombie", archived: true},
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
              ]
     end
   end
 
-  describe "open_pull_requests_of_organization/0" do
+  describe "organization_repos/1" do
+    test "with ignore_archived true" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      assert Enum.to_list(Github.organization_repos(ignore_archived: true)) == [
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
+             ]
+    end
+
+    test "with ignore_archived false" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      assert Enum.to_list(Github.organization_repos(ignore_archived: false)) == [
+               ok: %{owner: "dominaria inc", name: "zoombie", archived: true},
+               ok: %{owner: "dominaria inc", name: "goblin", archived: false}
+             ]
+    end
+
+    test "with wrong options" do
+      assert Enum.to_list(Github.organization_repos(i_think_this_is_a_param: true)) == []
+    end
+  end
+
+  describe "open_pull_requests_of_organization/1" do
     test "return a list of pr's" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
@@ -95,6 +132,48 @@ defmodule Lilictocat.GithubTest do
                  link: "https://link_pr.com/3",
                  number: 3,
                  project: "dominaria_inc/zoombie"
+               },
+               %{
+                 created_at: ~U[2020-11-23 17:41:20Z],
+                 link: "https://link_pr.com/4",
+                 number: 4,
+                 project: "dominaria_inc/goblin"
+               }
+             ]
+    end
+
+    test "return a list of pr's ignoring archived repos" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      expect(Lilictocat.Github.APIMock, :get_open_pulls, fn _owner, _name ->
+        [
+          %{
+            created_at: "2020-08-23T17:41:20Z",
+            html_url: "https://link_pr.com/2",
+            number: 2,
+            base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+          },
+          %{
+            created_at: "2020-11-23T17:41:20Z",
+            html_url: "https://link_pr.com/4",
+            number: 4,
+            base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+          }
+        ]
+      end)
+
+      assert Enum.to_list(Github.open_pull_requests_of_organization(ignore_archived: true)) == [
+               %{
+                 created_at: ~U[2020-08-23 17:41:20Z],
+                 link: "https://link_pr.com/2",
+                 number: 2,
+                 project: "dominaria_inc/goblin"
                },
                %{
                  created_at: ~U[2020-11-23 17:41:20Z],

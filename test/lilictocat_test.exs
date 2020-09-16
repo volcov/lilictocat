@@ -5,14 +5,14 @@ defmodule LilictocatTest do
 
   setup :verify_on_exit!
 
-  describe "get_oldest_pull_request_without_review/0" do
+  describe "get_oldest_pull_request_without_review/1" do
     test "returns a link for pull request" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"},
-          %{owner: %{login: "dominaria inc"}, name: "goblin"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true},
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
         ]
       end)
 
@@ -60,12 +60,40 @@ defmodule LilictocatTest do
                "https://github.com/dominaria/zoombie/pull/666"
     end
 
+    test "returns a link of pull request ignoring archived repos" do
+      expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
+
+      expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
+        [
+          %{owner: %{login: "dominaria inc"}, name: "goblin", archived: false}
+        ]
+      end)
+
+      expect(Lilictocat.Github.APIMock, :get_open_pulls, fn _owner, _name ->
+        [
+          %{
+            created_at: "2020-08-23T17:41:20Z",
+            html_url: "https://github.com/dominaria/goblin/pull/132",
+            number: 132,
+            base: %{repo: %{full_name: "dominaria_inc/goblin"}}
+          }
+        ]
+      end)
+
+      expect(Lilictocat.Github.APIMock, :get_reviews_of_pr, fn _project, _number ->
+        []
+      end)
+
+      assert Lilictocat.get_oldest_pull_request_without_review(ignore_archived: true) ==
+               "https://github.com/dominaria/goblin/pull/132"
+    end
+
     test "without open pull request" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
 
       expect(Lilictocat.Github.APIMock, :get_organization_repos, fn _name ->
         [
-          %{owner: %{login: "dominaria inc"}, name: "zoombie"}
+          %{owner: %{login: "dominaria inc"}, name: "zoombie", archived: true}
         ]
       end)
 
