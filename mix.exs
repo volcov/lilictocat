@@ -2,7 +2,7 @@ defmodule Lilictocat.MixProject do
   use Mix.Project
 
   @description "Lilictocat is a simple pull request filter."
-  @version "0.1.2"
+  @version "0.1.3"
 
   def project do
     [
