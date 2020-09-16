@@ -5,7 +5,7 @@ defmodule LilictocatTest do
 
   setup :verify_on_exit!
 
-  describe "get_oldest_pull_request_without_review/0" do
+  describe "get_oldest_pull_request_without_review/1" do
     test "returns a link for pull request" do
       expect(Lilictocat.Github.APIMock, :get_organizations, fn -> [%{login: "dominaria inc"}] end)
 

@@ -19,8 +19,8 @@ defmodule Lilictocat do
 
   """
 
-  @spec get_oldest_pull_request_without_review() :: String.t()
-  def get_oldest_pull_request_without_review do
+  @spec get_oldest_pull_request_without_review(list()) :: String.t()
+  def get_oldest_pull_request_without_review(arguments \\ []) do
     Github.open_pull_requests_of_organization()
     |> Stream.filter(fn pr -> Github.pull_request_without_review?(pr) end)
     |> Enum.min_by(& &1.created_at, DateTime, fn -> %{link: "no pr's to list"} end)
